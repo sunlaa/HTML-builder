@@ -12,7 +12,7 @@ fs.readdir(dirPath, { withFileTypes: true })
         const fullName = file.name;
         const endIndex = fullName.indexOf('.');
         const fileName = fullName.slice(0, endIndex);
-        const fileExt = path.extname(fullName);
+        const fileExt = path.extname(fullName).slice(1);
         fs.stat(path.join(dirPath, `${fullName}`))
           .then((file) => {
             const fileSize = file.size;
