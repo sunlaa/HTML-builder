@@ -31,5 +31,3 @@ async function bundle(from, to) {
 }
 
 bundle(stylePath, bundlePath);
-
-module.exports = { bundle };
