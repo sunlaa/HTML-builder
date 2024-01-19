@@ -2,19 +2,18 @@ const fs = require('fs');
 const path = require('path');
 
 const stylePath = path.join(__dirname, 'styles');
+const bundlePath = path.join(__dirname, 'project-dist', 'bundle.css');
 
-async function bundle() {
-  const stylesFiles = await fs.promises.readdir(stylePath, {
+async function bundle(from, to) {
+  const stylesFiles = await fs.promises.readdir(from, {
     withFileTypes: true,
   });
 
-  const output = fs.createWriteStream(
-    path.join(__dirname, 'project-dist', 'bundle.css'),
-  );
+  const output = fs.createWriteStream(to);
 
   for (let file of stylesFiles) {
     if (file.isFile() && path.extname(file.name) === '.css') {
-      const input = fs.createReadStream(path.join(stylePath, file.name));
+      const input = fs.createReadStream(path.join(from, file.name));
 
       let data = [];
 
@@ -31,4 +30,6 @@ async function bundle() {
   }
 }
 
-bundle();
+bundle(stylePath, bundlePath);
+
+module.exports = { bundle };
